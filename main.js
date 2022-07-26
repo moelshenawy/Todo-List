@@ -29,11 +29,7 @@ submitBtn.addEventListener("click", () => {
   if (input.value !== "") {
     addTaskToArray(input.value); // add task to array of tasks
   } else {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "The input field can not be empty",
-    });
+    alert("The input field can not be empty");
 
     let noTasksMsg = document.querySelector(".no-tasks-message");
     // Check If Span Message Is Exist
@@ -230,13 +226,9 @@ const checkTitles = (titles) => {
   for (let i = 0; i < titles.length; i++) {
     if (uniqTitle.indexOf(titles[i]) === -1) {
       uniqTitle.push(titles[i]);
-      Swal.fire("success!", "The task has been added", "success");
+      alert("success!", "The task has been added", "success");
     } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "This task has already been added!",
-      });
+      alert("This task has already been added!");
     }
   }
 };
