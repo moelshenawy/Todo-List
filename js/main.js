@@ -148,8 +148,8 @@ function addElementsToPage(arrayOfTasks) {
   });
 }
 
-const addDataToLocalStorage = (arrayOfTasks) => {
-  window.localStorage.setItem("tasks", JSON.stringify(arrayOfTasks));
+const addDataToLocalStorage = (uniqueTasks) => {
+  window.localStorage.setItem("tasks", JSON.stringify(uniqueTasks));
 };
 
 function getDataFromLocalStorage() {
