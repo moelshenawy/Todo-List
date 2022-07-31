@@ -29,8 +29,13 @@ submitBtn.addEventListener("click", () => {
   if (input.value !== "") {
     addTaskToArray(input.value); // add task to array of tasks
   } else {
-    alert("The input field can not be empty");
-
+    Swal.fire({
+      title: " Oops!",
+      text: "The input field can not be empty",
+      icon: "error",
+      button: "oh no!",
+    });
+    noTasksMsg.remove();
     let noTasksMsg = document.querySelector(".no-tasks-message");
     // Check If Span Message Is Exist
     if (document.body.contains(document.querySelector(".no-tasks-message"))) {
@@ -74,26 +79,23 @@ const addTaskToArray = (taskText) => {
     id: Date.now(),
     title: taskText,
     completed: false,
-    isExistent: false,
   };
 
   // Push Task To Array Of Tasks
   arrayOfTasks.push(task);
 
-  // loop on tasks to get titles
-  const titles = arrayOfTasks.map((task) => task.title);
-
-  // check if the task is already in the array
-  checkTitles(titles);
-  const uniqTitles = arrayOfTasks.filter(
-    ({ title }, index) => !titles.includes(title, index + 1)
-  );
+  // Get unique tasks only
+  const uniqueTasks = [
+    ...arrayOfTasks
+      .reduce((map, obj) => map.set(obj.title, obj), new Map())
+      .values(),
+  ];
 
   // Add Tasks To Page
-  addElementsToPage(uniqTitles);
+  addElementsToPage(uniqueTasks);
 
   // Add Tasks To Local Storage
-  addDataToLocalStorage(uniqTitles);
+  addDataToLocalStorage(uniqueTasks);
 };
 
 function addElementsToPage(arrayOfTasks) {
@@ -219,16 +221,4 @@ const finish = (taskId) => {
   }
   // Update to LocalStorage
   addDataToLocalStorage(arrayOfTasks);
-};
-
-const checkTitles = (titles) => {
-  let uniqTitle = [];
-  for (let i = 0; i < titles.length; i++) {
-    if (uniqTitle.indexOf(titles[i]) === -1) {
-      uniqTitle.push(titles[i]);
-      alert("success!", "The task has been added", "success");
-    } else {
-      alert("This task has already been added!");
-    }
-  }
 };
